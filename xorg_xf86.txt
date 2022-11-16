@@ -1,0 +1,2 @@
+https://aur.archlinux.org/packages/xf86-video-intel-git
+install and copy the demo after installation in the specified path
