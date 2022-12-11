@@ -1,0 +1,25 @@
+Let your init system start it for you. In my case I have this systemd unit:
+
+[Unit]
+Description=Emacs text editor
+Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/emacs --daemon
+ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+Environment=SSH_AUTH_SOCK=%t/keyring/ssh
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+
+I saved it to ~/.config/systemd/user/emacs.service and simply did systemctl enable --now --user emacs to have it start automatically with the machine.
+
+To connect to it I use:
+
+emacsclient -n -c -a emacs to start a frame as a GUI app
+
+emacsclient -t -a '' to start is as a console/text only mode
+
+If you fill in your $EDITOR and $VISUAL env vars you can simply issue sudoedit some-system-file and have all your sexy and cool config available to edit system files with no issues.
